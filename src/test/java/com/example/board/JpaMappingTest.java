@@ -32,7 +32,7 @@ public class JpaMappingTest {
 
     @Test
     public void test() {
-        Board board = boardRepository.getReferenceById(1);
+        Board board = boardRepository.getReferenceById((long) 1);
         assertThat(board.getTitle(), is(title));
         assertThat(board.getContent(), is(content));
     }
