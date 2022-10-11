@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void makeBoard(Board board) throws IllegalArgumentException, OptimisticLockingFailureException {
+    public void createBoard(Board board) throws IllegalArgumentException, OptimisticLockingFailureException {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         board.setCreatedTime(localDateTime);
