@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.board.model.Board;
 import com.example.board.repository.BoardRepository;
 import com.example.board.service.BoardService;
-import com.example.board.util.EntityToJson;
+import com.example.board.util.EntityToJsonConverter;
 
 @RestController
 @RequestMapping("/api/v1/boards")
@@ -25,9 +25,9 @@ public class BoardController {
     BoardService boardService;
 
     @PostMapping("")
-    public ResponseEntity<?> makeBoard(@RequestBody Board board) {
+    public ResponseEntity<?> createBoard(@RequestBody Board board) {
         try {
-            boardService.makeBoard(board);
+            boardService.createBoard(board);
         } catch (Exception e) {
             e.getMessage();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -42,7 +42,7 @@ public class BoardController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getBoard(@PathVariable long id) {
-        EntityToJson<Board> entitytoJson = new EntityToJson<Board>();
+        EntityToJsonConverter<Board> entitytoJson = new EntityToJsonConverter<Board>();
         String result;
 
         try {
