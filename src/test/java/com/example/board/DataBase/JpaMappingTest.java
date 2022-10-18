@@ -1,4 +1,4 @@
-package com.example.board;
+package com.example.board.DataBase;
 
 import org.junit.Before;
 import org.junit.Test;

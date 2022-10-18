@@ -1,6 +1,7 @@
 package com.example.board.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,12 @@ public class BoardServiceImpl implements BoardService {
     BoardRepository boardRepository;
 
     @Override
-    public Optional<Board> getBoardById(long id) throws EntityNotFoundException {
+    public List<Board> getAllBoards() {
+        return boardRepository.findAll();
+    }
+
+    @Override
+    public Optional<Board> getBoardById(long id) throws IllegalArgumentException {
         return boardRepository.findById(id);
     }
 
@@ -49,12 +55,16 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void updateBoard(long id, Board board)
             throws EntityNotFoundException, IllegalArgumentException, OptimisticLockingFailureException {
-        Board newBoard = boardRepository.getReferenceById(id);
+        Optional<Board> updatedBoardWrapper = boardRepository.findById(id);
+        if (updatedBoardWrapper.isEmpty())
+            throw new EntityNotFoundException();
 
-        newBoard.setTitle(board.getTitle());
-        newBoard.setContent(board.getContent());
-        newBoard.setUpdatedTime(LocalDateTime.now());
-        boardRepository.save(newBoard);
+        Board updatedBoard = updatedBoardWrapper.get();
+
+        updatedBoard.setTitle(board.getTitle());
+        updatedBoard.setContent(board.getContent());
+        updatedBoard.setUpdatedTime(LocalDateTime.now());
+        boardRepository.save(updatedBoard);
     }
 
 }

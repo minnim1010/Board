@@ -1,5 +1,6 @@
 package com.example.board.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -13,6 +14,8 @@ public interface BoardService {
     void updateBoard(long id, Board board);
 
     void deleteBoard(long id);
+
+    List<Board> getAllBoards();
 
     Optional<Board> getBoardById(long id);
 

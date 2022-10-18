@@ -10,16 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.board.model.Board;
-import com.example.board.repository.BoardRepository;
 import com.example.board.service.BoardService;
 import com.example.board.util.EntityToJsonConverter;
 
 @RestController
 @RequestMapping("/api/v1/boards")
 public class BoardController {
-
-    @Autowired
-    BoardRepository boardRepository;
 
     @Autowired
     BoardService boardService;
@@ -37,7 +33,7 @@ public class BoardController {
 
     @GetMapping("")
     public List<Board> getAllBoards() {
-        return boardRepository.findAll();
+        return boardService.getAllBoards();
     }
 
     @GetMapping("/{id}")
@@ -61,7 +57,7 @@ public class BoardController {
             boardService.updateBoard(id, board);
         } catch (Exception e) {
             e.getMessage();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -70,7 +66,7 @@ public class BoardController {
     public ResponseEntity<?> deleteBoard(@PathVariable long id) {
         try {
             boardService.deleteBoard(id);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             e.getMessage();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -1,4 +1,4 @@
-package com.example.board;
+package com.example.board.DataBase;
 
 import java.sql.Connection;
 
