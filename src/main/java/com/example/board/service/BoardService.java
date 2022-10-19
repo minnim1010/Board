@@ -9,9 +9,9 @@ import org.springframework.data.domain.Pageable;
 import com.example.board.model.Board;
 
 public interface BoardService {
-    void createBoard(Board board);
+    Long createBoard(Board board);
 
-    void updateBoard(long id, Board board);
+    Long updateBoard(long id, Board board);
 
     void deleteBoard(long id);
 

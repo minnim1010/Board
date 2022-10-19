@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.el.lang.ELArithmetic.LongDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
@@ -39,12 +40,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void createBoard(Board board) throws IllegalArgumentException, OptimisticLockingFailureException {
+    public Long createBoard(Board board) throws IllegalArgumentException, OptimisticLockingFailureException {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         board.setCreatedTime(localDateTime);
         board.setUpdatedTime(localDateTime);
-        boardRepository.save(board);
+        return boardRepository.save(board).getId();
     }
 
     @Override
@@ -53,7 +54,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void updateBoard(long id, Board board)
+    public Long updateBoard(long id, Board board)
             throws EntityNotFoundException, IllegalArgumentException, OptimisticLockingFailureException {
         Optional<Board> updatedBoardWrapper = boardRepository.findById(id);
         if (updatedBoardWrapper.isEmpty())
@@ -64,7 +65,7 @@ public class BoardServiceImpl implements BoardService {
         updatedBoard.setTitle(board.getTitle());
         updatedBoard.setContent(board.getContent());
         updatedBoard.setUpdatedTime(LocalDateTime.now());
-        boardRepository.save(updatedBoard);
+        return boardRepository.save(updatedBoard).getId();
     }
 
 }
